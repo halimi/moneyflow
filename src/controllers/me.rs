@@ -1,8 +1,12 @@
-use actix_web::{Responder, get, post};
+use actix_web::{HttpRequest, Responder, get, post};
+
+use crate::utils;
 
 #[get("/me")]
-pub async fn get_profile() -> impl Responder {
-    "Profile"
+pub async fn get_profile(req: HttpRequest) -> impl Responder {
+    let user_id = utils::get_user_id(&req);
+
+    format!("Profile of user: {user_id}")
 }
 
 #[post("/me")]

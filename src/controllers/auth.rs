@@ -43,7 +43,7 @@ pub struct SignInRequest {
     pub password: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Claims {
     pub sub: u64,
     pub role: String,
