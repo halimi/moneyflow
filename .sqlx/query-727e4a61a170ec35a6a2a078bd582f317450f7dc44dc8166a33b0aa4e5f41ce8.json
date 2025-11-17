@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE users SET firstname = ?, lastname = ? WHERE id =?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "727e4a61a170ec35a6a2a078bd582f317450f7dc44dc8166a33b0aa4e5f41ce8"
+}
