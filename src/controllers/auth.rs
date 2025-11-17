@@ -5,10 +5,7 @@ use jsonwebtoken::{EncodingKey, Header};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::{
-    AppState,
-    db::{self, user},
-};
+use crate::{AppState, db};
 
 #[derive(Deserialize, Debug)]
 pub struct SignUpRequest {
