@@ -1,3 +1,9 @@
+use std::time::Duration;
+
+use actix_extensible_rate_limit::{
+    RateLimiter,
+    backend::{SimpleInputFunctionBuilder, memory::InMemoryBackend},
+};
 use actix_web::{App, HttpServer, middleware::from_fn, web};
 use tokio::sync::Mutex;
 
@@ -24,8 +30,20 @@ async fn main() -> std::io::Result<()> {
         jwt_secret: std::env::var("JWT_SECRET").unwrap(),
     });
 
+    let rate_limiter_backend = InMemoryBackend::builder().build();
+
     HttpServer::new(move || {
         App::new()
+            .wrap(
+                RateLimiter::builder(
+                    rate_limiter_backend.clone(),
+                    SimpleInputFunctionBuilder::new(Duration::from_secs(60), 50)
+                        .real_ip_key()
+                        .build(),
+                )
+                .add_headers()
+                .build(),
+            )
             .app_data(state.clone())
             .service(controllers::auth::sign_up)
             .service(controllers::auth::sign_in)
